@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Camera Stream</title>
+    <style>
+        #video {
+            border: 2px solid black;
+        }pip install gunicorn
+
+    </style>
+</head>
+<body>
+    <h1>Camera Stream</h1>
+    <img id="video" src="{{ url_for('video_feed') }}" width="640" height="480">
+    <p id="mouse_position">Mouse Position: (0, 0)</p>
+    <p id="keys_pressed">Keys Pressed: None</p>
+
+    <script>
+        const video = document.getElementById('video');
+        const mousePosition = document.getElementById('mouse_position');
+        const keysPressed = document.getElementById('keys_pressed');
+
+        video.addEventListener('mousemove', function(event) {
+            const rect = video.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            mousePosition.textContent = `Mouse Position: (${x}, ${y})`;
+        });
+
+        document.addEventListener('keydown', function(event) {
+            const keys = ['w', 'a', 's', 'd'];
+            if (keys.includes(event.key)) {
+                keysPressed.textContent = `Keys Pressed: ${event.key}`;
+            }
+        });
+
+        document.addEventListener('keyup', function(event) {
+            const keys = ['w', 'a', 's', 'd'];
+            if (keys.includes(event.key)) {
+                keysPressed.textContent = `Keys Pressed: None`;
+            }
+        });
+    </script>
+</body>
+</html>
